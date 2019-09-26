@@ -9,7 +9,7 @@ const MONGO_URI = `mongodb+srv://${USER}:${PASSWORD}@${config.dbHost}:${config.d
 
 class MongoLib {
     constructor() {
-        this.client = new MongoClient(MONGO_URI, { useNewUrlParser: true });
+        this.client = new MongoClient(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
         this.dbName = DB_NAME;
     }
 
@@ -21,7 +21,7 @@ class MongoLib {
                     if (err) {
                         reject(err);
                     }
-                    console.log('La conexion fue exitosa mongo');
+                    //console.log('La conexion fue exitosa mongo');
                     resolve(this.client.db(this.dbName));
                 });
             });
@@ -31,7 +31,7 @@ class MongoLib {
     }
 
     getAll(collection, query) {
-        return this.connect().then(db => {
+        return this.connect().then((db) => {
             return db
                 .collection(collection)
                 .find(query)
